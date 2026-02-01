@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { RefreshCw, AlertTriangle, CheckCircle, Info, Activity, Waves, Zap } from "lucide-react";
+import { RefreshCw, AlertTriangle, CheckCircle, Info, Activity, Waves, Zap, FileText, Lightbulb } from "lucide-react";
 import type { AnalysisResult } from "./AnalysisSection";
 
 interface AnalysisResultsProps {
@@ -37,6 +37,14 @@ const AnalysisResults = ({ results, onReset }: AnalysisResultsProps) => {
 
   return (
     <div className="space-y-8 animate-fade-in">
+      {/* AI Analysis Badge */}
+      <div className="flex justify-center">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
+          <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
+          <span className="text-sm font-medium text-primary">Powered by Lovable AI</span>
+        </div>
+      </div>
+
       {/* Primary diagnosis */}
       <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-secondary to-secondary/50 border border-border">
         <p className="text-sm text-muted-foreground mb-2">Primary Assessment</p>
@@ -58,7 +66,14 @@ const AnalysisResults = ({ results, onReset }: AnalysisResultsProps) => {
           {results.predictions.map((pred, index) => (
             <div key={pred.condition} className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-foreground">{pred.condition}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-foreground">{pred.condition}</span>
+                  {pred.reasoning && (
+                    <span className="text-xs text-muted-foreground hidden sm:inline">
+                      — {pred.reasoning}
+                    </span>
+                  )}
+                </div>
                 <span className="text-sm text-muted-foreground">
                   {(pred.probability * 100).toFixed(1)}%
                 </span>
@@ -78,6 +93,41 @@ const AnalysisResults = ({ results, onReset }: AnalysisResultsProps) => {
         </div>
       </div>
 
+      {/* Clinical Notes from AI */}
+      {results.clinicalNotes && (
+        <div className="p-6 rounded-xl bg-secondary/30 border border-border">
+          <div className="flex items-center gap-2 mb-3">
+            <FileText className="h-5 w-5 text-primary" />
+            <h4 className="font-display text-lg font-semibold text-foreground">
+              Clinical Analysis Notes
+            </h4>
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {results.clinicalNotes}
+          </p>
+        </div>
+      )}
+
+      {/* Recommendations */}
+      {results.recommendations && results.recommendations.length > 0 && (
+        <div className="p-6 rounded-xl bg-info/5 border border-info/20">
+          <div className="flex items-center gap-2 mb-3">
+            <Lightbulb className="h-5 w-5 text-info" />
+            <h4 className="font-display text-lg font-semibold text-foreground">
+              Recommendations
+            </h4>
+          </div>
+          <ul className="space-y-2">
+            {results.recommendations.map((rec, index) => (
+              <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
+                <span className="text-info">•</span>
+                {rec}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {/* Audio features */}
       <div className="grid sm:grid-cols-3 gap-4">
         <div className="p-4 rounded-xl bg-secondary/50 border border-border">
@@ -86,7 +136,7 @@ const AnalysisResults = ({ results, onReset }: AnalysisResultsProps) => {
             <span className="text-xs text-muted-foreground">Zero Crossing Rate</span>
           </div>
           <p className="font-display text-2xl font-bold text-foreground">
-            {results.audioFeatures.zcr.toFixed(3)}
+            {results.audioFeatures.zcr.toFixed(4)}
           </p>
         </div>
 

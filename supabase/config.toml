@@ -1,0 +1,4 @@
+project_id = "xjoepzkvrffcpgcrtawk"
+
+[functions.analyze-lung-sound]
+verify_jwt = false
