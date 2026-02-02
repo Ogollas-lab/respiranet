@@ -4,7 +4,8 @@ import SymptomForm from "./SymptomForm";
 import AnalysisResults from "./AnalysisResults";
 import { Loader2, Stethoscope } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-
+import { useAuth } from "@/hooks/useAuth";
+import { useAnalysisHistory } from "@/hooks/useAnalysisHistory";
 export interface SymptomData {
   fever: boolean;
   chestPain: boolean;
@@ -55,7 +56,8 @@ const AnalysisSection = () => {
   
   const audioContextRef = useRef<AudioContext | null>(null);
   const { toast } = useToast();
-
+  const { user } = useAuth();
+  const { saveAnalysis } = useAnalysisHistory();
   // Process audio file to extract features using Web Audio API
   const extractAudioFeatures = async (file: File) => {
     try {
@@ -222,7 +224,7 @@ const AnalysisSection = () => {
         reasoning: p.reasoning,
       }));
 
-      setResults({
+      const analysisResults = {
         predictions,
         confidence: aiResult.confidence || "medium",
         primaryDiagnosis: aiResult.primaryDiagnosis || predictions[0]?.condition || "Unknown",
@@ -233,11 +235,32 @@ const AnalysisSection = () => {
           spectralCentroid: audioFeatures.spectralCentroid,
           harmonicEnergy: audioFeatures.harmonicEnergy,
         },
-      });
+      } as AnalysisResult;
+
+      setResults(analysisResults);
+
+      // Save to history if user is logged in
+      if (user && audioFile) {
+        const { error: saveError } = await saveAnalysis({
+          fileName: audioFile.name,
+          results: analysisResults,
+          symptoms: symptomData,
+        });
+        
+        if (saveError) {
+          console.error("Failed to save analysis:", saveError);
+        } else {
+          toast({
+            title: "Analysis Complete",
+            description: "Results saved to your history.",
+          });
+          return;
+        }
+      }
 
       toast({
         title: "Analysis Complete",
-        description: "Your lung sound analysis is ready.",
+        description: user ? "Your lung sound analysis is ready." : "Sign in to save your results.",
       });
     } catch (error) {
       console.error("Analysis error:", error);
