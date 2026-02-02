@@ -3,6 +3,7 @@ import { Activity, Stethoscope, User, LogOut, History } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import AuthModal from "@/components/AuthModal";
+import ThemeToggle from "@/components/ThemeToggle";
 import { Link } from "react-router-dom";
 import {
   DropdownMenu,
@@ -78,6 +79,8 @@ const Header = () => {
               </Button>
             )}
 
+            <ThemeToggle />
+            
             <div className="flex items-center gap-2 rounded-full bg-secondary px-3 py-1.5">
               <Activity className="h-4 w-4 text-primary" />
               <span className="text-xs font-medium text-secondary-foreground hidden sm:inline">AI Ready</span>
