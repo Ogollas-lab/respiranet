@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { Upload, FileAudio, X, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import LiveRecorder from "./LiveRecorder";
 
 interface AudioUploaderProps {
   onUpload: (file: File) => void;
@@ -9,6 +10,7 @@ interface AudioUploaderProps {
 const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [mode, setMode] = useState<"upload" | "record">("upload");
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -42,9 +44,23 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
     }
   };
 
+  const handleRecordingComplete = (file: File) => {
+    setSelectedFile(file);
+    setMode("upload");
+  };
+
   const clearFile = () => {
     setSelectedFile(null);
   };
+
+  if (mode === "record") {
+    return (
+      <LiveRecorder 
+        onRecordingComplete={handleRecordingComplete}
+        onCancel={() => setMode("upload")}
+      />
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -128,12 +144,17 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
           disabled={!selectedFile}
         >
           <FileAudio className="h-5 w-5 mr-2" />
-          Continue with Upload
+          Continue with {selectedFile ? "File" : "Upload"}
         </Button>
         
-        <Button variant="clinical" size="lg" className="flex-1" disabled>
+        <Button 
+          variant="clinical" 
+          size="lg" 
+          className="flex-1"
+          onClick={() => setMode("record")}
+        >
           <Mic className="h-5 w-5 mr-2" />
-          Record Live (Coming Soon)
+          Record Live
         </Button>
       </div>
 
