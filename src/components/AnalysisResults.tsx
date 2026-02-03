@@ -1,13 +1,21 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, AlertTriangle, CheckCircle, Info, Activity, Waves, Zap, FileText, Lightbulb } from "lucide-react";
-import type { AnalysisResult } from "./AnalysisSection";
+import { RefreshCw, AlertTriangle, CheckCircle, Info, Activity, Waves, Zap, FileText, Lightbulb, Download, Loader2 } from "lucide-react";
+import { generatePdfReport } from "@/lib/generatePdfReport";
+import { useToast } from "@/hooks/use-toast";
+import type { AnalysisResult, SymptomData } from "./AnalysisSection";
 
 interface AnalysisResultsProps {
   results: AnalysisResult;
+  symptoms?: SymptomData;
+  fileName?: string;
   onReset: () => void;
 }
 
-const AnalysisResults = ({ results, onReset }: AnalysisResultsProps) => {
+const AnalysisResults = ({ results, symptoms, fileName, onReset }: AnalysisResultsProps) => {
+  const [isGenerating, setIsGenerating] = useState(false);
+  const { toast } = useToast();
+
   const confidenceConfig = {
     high: { 
       icon: CheckCircle, 
@@ -34,6 +42,34 @@ const AnalysisResults = ({ results, onReset }: AnalysisResultsProps) => {
 
   const conf = confidenceConfig[results.confidence];
   const ConfIcon = conf.icon;
+
+  const handleDownloadReport = async () => {
+    setIsGenerating(true);
+    try {
+      // Small delay to show loading state
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const pdfFileName = generatePdfReport({
+        results,
+        symptoms,
+        fileName,
+      });
+      
+      toast({
+        title: "Report Downloaded",
+        description: `${pdfFileName} has been saved to your device.`,
+      });
+    } catch (error) {
+      console.error("PDF generation error:", error);
+      toast({
+        title: "Download Failed",
+        description: "Failed to generate PDF report. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -203,8 +239,19 @@ const AnalysisResults = ({ results, onReset }: AnalysisResultsProps) => {
           <RefreshCw className="h-5 w-5 mr-2" />
           New Analysis
         </Button>
-        <Button variant="hero" size="lg" className="flex-1">
-          Download Report
+        <Button 
+          variant="hero" 
+          size="lg" 
+          className="flex-1" 
+          onClick={handleDownloadReport}
+          disabled={isGenerating}
+        >
+          {isGenerating ? (
+            <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+          ) : (
+            <Download className="h-5 w-5 mr-2" />
+          )}
+          {isGenerating ? "Generating..." : "Download Report"}
         </Button>
       </div>
     </div>
