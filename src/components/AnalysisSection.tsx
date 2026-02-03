@@ -375,7 +375,12 @@ const AnalysisSection = () => {
                   </div>
                 </div>
               ) : results ? (
-                <AnalysisResults results={results} onReset={resetAnalysis} />
+                <AnalysisResults 
+                  results={results} 
+                  symptoms={symptoms ?? undefined}
+                  fileName={audioFile?.name}
+                  onReset={resetAnalysis} 
+                />
               ) : null}
             </div>
           )}
