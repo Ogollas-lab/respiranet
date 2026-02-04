@@ -79,8 +79,9 @@ const AuthModal = ({ open, onOpenChange }: AuthModalProps) => {
           });
         } else {
           toast({
-            title: "Account Created!",
-            description: "Please check your email to verify your account.",
+            title: "✉️ Check Your Inbox!",
+            description: `We've sent a verification link to ${email}. Please click the link to activate your account before signing in.`,
+            duration: 8000,
           });
           onOpenChange(false);
           resetForm();
