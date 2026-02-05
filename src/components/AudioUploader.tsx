@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { Upload, FileAudio, X, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LiveRecorder from "./LiveRecorder";
-
+import AudioPreviewPlayer from "./AudioPreviewPlayer";
 interface AudioUploaderProps {
   onUpload: (file: File) => void;
 }
@@ -112,7 +112,7 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
           </div>
         </div>
       ) : (
-        <div className="border border-border rounded-xl p-6 bg-secondary/20">
+        <div className="border border-border rounded-xl p-6 bg-secondary/20 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="h-14 w-14 rounded-xl gradient-bg flex items-center justify-center">
@@ -132,6 +132,8 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
               <X className="h-4 w-4" />
             </button>
           </div>
+          
+          <AudioPreviewPlayer file={selectedFile} />
         </div>
       )}
 
