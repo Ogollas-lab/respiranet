@@ -37,10 +37,13 @@ const Header = () => {
           </Link>
           
           <nav className="flex items-center gap-4">
-            <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
+            <Link to="/about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
+              About
+            </Link>
+            <a href="/#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
               Features
             </a>
-            <a href="#analyze" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
+            <a href="/#analyze" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
               Analyze
             </a>
             
