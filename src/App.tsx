@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import History from "./pages/History";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +23,7 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/history" element={<History />} />
+              <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
               <Route path="/about" element={<About />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

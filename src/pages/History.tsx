@@ -40,11 +40,7 @@ const History = () => {
   const [records, setRecords] = useState<AnalysisRecord[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!authLoading && !user) {
-      navigate("/");
-    }
-  }, [user, authLoading, navigate]);
+  // Route protection is handled by ProtectedRoute wrapper
 
   useEffect(() => {
     if (user) {
