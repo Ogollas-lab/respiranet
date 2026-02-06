@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import ConditionCard from "@/components/ConditionCard";
 import Footer from "@/components/Footer";
 import { 
   Stethoscope, 
@@ -160,65 +161,51 @@ const About = () => {
             </h2>
             
             <div className="grid sm:grid-cols-2 gap-4">
-              <div className="border border-border rounded-xl p-5 flex gap-4 items-start">
-                <div className="h-10 w-10 rounded-lg bg-success/10 flex items-center justify-center flex-shrink-0">
-                  <CheckCircle2 className="h-5 w-5 text-success" />
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-1">Normal Breathing</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Clear lung sounds without abnormal patterns, indicating healthy respiratory function
-                  </p>
-                </div>
-              </div>
+              <ConditionCard
+                icon={CheckCircle2}
+                iconBg="bg-success/10"
+                iconColor="text-success"
+                title="Normal Breathing"
+                summary="Clear lung sounds without abnormal patterns, indicating healthy respiratory function."
+                details="Normal breath sounds include vesicular sounds heard over most lung fields, bronchial sounds near the trachea, and bronchovesicular sounds in between. During auscultation, the inspiratory phase is longer than expiratory. Healthy breathing produces consistent, soft rustling sounds without crackles, wheezes, or stridor. Factors like body habitus and breathing depth can affect sound intensity."
+              />
               
-              <div className="border border-border rounded-xl p-5 flex gap-4 items-start">
-                <div className="h-10 w-10 rounded-lg bg-destructive/10 flex items-center justify-center flex-shrink-0">
-                  <HeartPulse className="h-5 w-5 text-destructive" />
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-1">Pneumonia</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Lung infection that causes inflammation and fluid buildup, often with crackling sounds
-                  </p>
-                </div>
-              </div>
+              <ConditionCard
+                icon={HeartPulse}
+                iconBg="bg-destructive/10"
+                iconColor="text-destructive"
+                title="Pneumonia"
+                summary="Lung infection that causes inflammation and fluid buildup, often with crackling sounds."
+                details="Pneumonia is an infection of the lung parenchyma caused by bacteria, viruses, or fungi. It leads to alveolar consolidation and fluid accumulation. Auscultation typically reveals fine crackles (rales), bronchial breath sounds over consolidated areas, and sometimes egophony. Symptoms include fever, productive cough, chest pain, and shortness of breath. Early detection and treatment with appropriate antibiotics or antivirals are critical."
+              />
               
-              <div className="border border-border rounded-xl p-5 flex gap-4 items-start">
-                <div className="h-10 w-10 rounded-lg bg-warning/10 flex items-center justify-center flex-shrink-0">
-                  <Stethoscope className="h-5 w-5 text-warning" />
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-1">Asthma</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Chronic condition causing airway inflammation and characteristic wheezing sounds
-                  </p>
-                </div>
-              </div>
+              <ConditionCard
+                icon={Stethoscope}
+                iconBg="bg-warning/10"
+                iconColor="text-warning"
+                title="Asthma"
+                summary="Chronic condition causing airway inflammation and characteristic wheezing sounds."
+                details="Asthma is a chronic inflammatory disorder of the airways characterized by episodic and reversible airflow obstruction. It causes hyperresponsiveness of the bronchial tubes leading to wheezing, chest tightness, coughing, and shortness of breath. Auscultation reveals expiratory wheezes—musical, high-pitched sounds. Triggers include allergens, exercise, cold air, and respiratory infections. Management involves inhaled corticosteroids and bronchodilators."
+              />
               
-              <div className="border border-border rounded-xl p-5 flex gap-4 items-start">
-                <div className="h-10 w-10 rounded-lg bg-info/10 flex items-center justify-center flex-shrink-0">
-                  <FileAudio className="h-5 w-5 text-info" />
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-1">COPD</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Chronic obstructive pulmonary disease affecting airflow with diminished breath sounds
-                  </p>
-                </div>
-              </div>
+              <ConditionCard
+                icon={FileAudio}
+                iconBg="bg-info/10"
+                iconColor="text-info"
+                title="COPD"
+                summary="Chronic obstructive pulmonary disease affecting airflow with diminished breath sounds."
+                details="COPD encompasses chronic bronchitis and emphysema, characterized by persistent airflow limitation. It is primarily caused by long-term tobacco exposure. Patients exhibit diminished breath sounds, prolonged expiration, and sometimes wheezes or coarse crackles. Spirometry shows reduced FEV1/FVC ratio. It is progressive but manageable with bronchodilators, inhaled steroids, pulmonary rehabilitation, and smoking cessation."
+              />
               
-              <div className="border border-border rounded-xl p-5 flex gap-4 items-start sm:col-span-2 sm:max-w-md sm:mx-auto">
-                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Brain className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-1">Bronchitis</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Inflammation of the bronchial tubes causing coughing and mucus production
-                  </p>
-                </div>
-              </div>
+              <ConditionCard
+                icon={Brain}
+                iconBg="bg-primary/10"
+                iconColor="text-primary"
+                title="Bronchitis"
+                summary="Inflammation of the bronchial tubes causing coughing and mucus production."
+                details="Bronchitis is inflammation of the bronchial tubes, which carry air to and from the lungs. Acute bronchitis is usually caused by viral infections and resolves within weeks. Chronic bronchitis, a form of COPD, involves a productive cough lasting at least three months in two consecutive years. Auscultation may reveal rhonchi (low-pitched continuous sounds) and scattered wheezes. Treatment focuses on symptom management and addressing underlying causes."
+                className="sm:col-span-2 sm:max-w-md sm:mx-auto"
+              />
             </div>
           </div>
         </section>
