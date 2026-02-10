@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import ConditionCard from "@/components/ConditionCard";
+import StepCard from "@/components/StepCard";
 import Footer from "@/components/Footer";
 import { 
   Stethoscope, 
@@ -90,65 +91,30 @@ const About = () => {
             </h2>
             
             <div className="space-y-6">
-              <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 h-10 w-10 rounded-full gradient-bg flex items-center justify-center text-primary-foreground font-bold">
-                  1
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg mb-1">Provide a Lung Sound Recording</h3>
-                  <p className="text-muted-foreground">
-                    You can either record lung sounds directly using your device's microphone 
-                    (ideally with a digital stethoscope for best results) or upload an existing 
-                    audio file in formats like WAV, MP3, or M4A. The recording should be 5-30 
-                    seconds long with minimal background noise.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 h-10 w-10 rounded-full gradient-bg flex items-center justify-center text-primary-foreground font-bold">
-                  2
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg mb-1">Answer Symptom Questions</h3>
-                  <p className="text-muted-foreground">
-                    After uploading your audio, you'll answer a few simple questions about your 
-                    symptoms – things like whether you have a fever, chest pain, cough type, and 
-                    how long you've been experiencing symptoms. This helps the AI make more 
-                    accurate assessments.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 h-10 w-10 rounded-full gradient-bg flex items-center justify-center text-primary-foreground font-bold">
-                  3
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg mb-1">AI Processes Your Data</h3>
-                  <p className="text-muted-foreground">
-                    Our system extracts acoustic features from your audio recording – including 
-                    spectral characteristics, frequency patterns, and energy levels. These features, 
-                    combined with your symptom data, are analyzed by an advanced AI model trained 
-                    to recognize patterns associated with different respiratory conditions.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 h-10 w-10 rounded-full gradient-bg flex items-center justify-center text-primary-foreground font-bold">
-                  4
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg mb-1">Review Your Results</h3>
-                  <p className="text-muted-foreground">
-                    You'll receive a detailed analysis showing probability scores for conditions 
-                    like normal breathing, pneumonia, asthma, COPD, and bronchitis. The report 
-                    includes clinical notes, recommendations, and confidence levels. You can 
-                    download your results as a PDF report.
-                  </p>
-                </div>
-              </div>
+              <StepCard
+                step={1}
+                title="Provide a Lung Sound Recording"
+                summary="Record lung sounds directly using your device's microphone or upload an existing audio file in formats like WAV, MP3, or M4A."
+                details="For best results, use a digital stethoscope placed on the chest wall. The recording should be 5-30 seconds long with minimal background noise. Position the microphone or stethoscope on the anterior or posterior chest wall, ideally over multiple lung fields. Breathe normally and deeply during recording. Avoid talking, coughing, or moving during the capture. Supported formats include WAV (recommended for highest quality), MP3, M4A, OGG, and WebM."
+              />
+              <StepCard
+                step={2}
+                title="Answer Symptom Questions"
+                summary="Answer a few simple questions about your symptoms – things like fever, chest pain, cough type, and symptom duration."
+                details="The symptom questionnaire covers key clinical indicators that help the AI correlate audio patterns with specific conditions. Questions include: presence and duration of fever, type of cough (dry vs. productive), chest pain characteristics, shortness of breath severity, smoking history, and any known respiratory conditions. These factors significantly improve diagnostic accuracy by providing clinical context that audio alone cannot capture."
+              />
+              <StepCard
+                step={3}
+                title="AI Processes Your Data"
+                summary="Our system extracts acoustic features from your audio and combines them with your symptom data for AI analysis."
+                details="The analysis pipeline extracts multiple acoustic features including spectral centroid, spectral rolloff, zero-crossing rate, MFCCs (Mel-frequency cepstral coefficients), chroma features, and energy levels. These features capture the unique frequency signatures of different respiratory sounds – crackles, wheezes, rhonchi, and stridor each have distinct spectral patterns. The AI model then combines these acoustic signatures with your symptom profile to generate probability scores across multiple conditions."
+              />
+              <StepCard
+                step={4}
+                title="Review Your Results"
+                summary="Receive a detailed analysis with probability scores for conditions like normal breathing, pneumonia, asthma, COPD, and bronchitis."
+                details="Your results include: probability percentages for each screened condition, a primary diagnosis with confidence level, detailed clinical notes explaining the findings, and personalized recommendations. The report highlights which acoustic features and symptoms contributed most to the assessment. You can download your complete results as a PDF report for your records or to share with your healthcare provider."
+              />
             </div>
           </div>
         </section>
