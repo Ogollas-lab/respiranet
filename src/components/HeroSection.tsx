@@ -1,4 +1,5 @@
 import { ArrowRight, Shield, Zap, Brain } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import WaveformVisualizer from "./WaveformVisualizer";
 
@@ -43,8 +44,8 @@ const HeroSection = () => {
                 Start Analysis
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button variant="clinical" size="xl">
-                Learn More
+              <Button variant="clinical" size="xl" asChild>
+                <Link to="/about">Learn More</Link>
               </Button>
             </div>
 
