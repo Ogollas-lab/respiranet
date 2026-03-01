@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ChevronDown, LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +14,15 @@ interface ConditionCardProps {
 
 const ConditionCard = ({ icon: Icon, iconBg, iconColor, title, summary, details, className }: ConditionCardProps) => {
   const [expanded, setExpanded] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const handleToggle = () => {
+    const next = !expanded;
+    setExpanded(next);
+    if (next) {
+      setTimeout(() => contentRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 150);
+    }
+  };
 
   return (
     <div className={cn("border border-border rounded-xl p-5 transition-all duration-300", className)}>
@@ -26,6 +35,7 @@ const ConditionCard = ({ icon: Icon, iconBg, iconColor, title, summary, details,
           <p className="text-sm text-muted-foreground">{summary}</p>
           
           <div
+            ref={contentRef}
             className={cn(
               "overflow-hidden transition-all duration-300",
               expanded ? "max-h-96 opacity-100 mt-3" : "max-h-0 opacity-0"
@@ -37,7 +47,7 @@ const ConditionCard = ({ icon: Icon, iconBg, iconColor, title, summary, details,
           </div>
 
           <button
-            onClick={() => setExpanded(!expanded)}
+            onClick={handleToggle}
             className="mt-2 text-xs font-medium text-primary hover:text-primary/80 inline-flex items-center gap-1 transition-colors"
           >
             {expanded ? "Show less" : "Read more"}
