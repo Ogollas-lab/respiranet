@@ -34,7 +34,7 @@ const About = () => {
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-b from-primary/5 to-background">
+        <section id="overview" className="py-20 bg-gradient-to-b from-primary/5 to-background scroll-mt-20">
           <div className="container max-w-4xl text-center">
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
               <Sparkles className="h-4 w-4 text-primary" />
@@ -47,12 +47,29 @@ const About = () => {
               LungAI is an innovative AI-powered tool designed to help analyze lung sounds 
               and provide insights into potential respiratory conditions. Our mission is to 
               make respiratory health screening more accessible to everyone.
-            </p>
+           </p>
+            <nav className="flex flex-wrap justify-center gap-3 mt-8">
+              {[
+                { label: "What We Do", href: "#what-we-do" },
+                { label: "How It Works", href: "#how-it-works" },
+                { label: "Conditions", href: "#conditions" },
+                { label: "Disclaimer", href: "#disclaimer" },
+                { label: "Privacy", href: "#privacy" },
+              ].map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-medium px-4 py-2 rounded-full border border-border bg-background hover:bg-muted transition-colors"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
           </div>
         </section>
 
         {/* What We Do */}
-        <section className="py-16">
+        <section id="what-we-do" className="py-16 scroll-mt-20">
           <div className="container max-w-4xl">
             <h2 className="font-display text-3xl font-bold mb-8 text-center">
               What Does LungAI Do?
@@ -93,7 +110,7 @@ const About = () => {
         </section>
 
         {/* How It Works */}
-        <section className="py-16 bg-muted/30">
+        <section id="how-it-works" className="py-16 bg-muted/30 scroll-mt-20">
           <div className="container max-w-4xl">
             <h2 className="font-display text-3xl font-bold mb-8 text-center">
               How Does It Work?
@@ -129,7 +146,7 @@ const About = () => {
         </section>
 
         {/* Conditions We Screen */}
-        <section className="py-16">
+        <section id="conditions" className="py-16 scroll-mt-20">
           <div className="container max-w-4xl">
             <h2 className="font-display text-3xl font-bold mb-8 text-center">
               Conditions We Can Help Identify
@@ -186,7 +203,7 @@ const About = () => {
         </section>
 
         {/* Important Disclaimer */}
-        <section className="py-16 bg-warning/5">
+        <section id="disclaimer" className="py-16 bg-warning/5 scroll-mt-20">
           <div className="container max-w-3xl">
             <div className="flex gap-4 items-start">
               <div className="h-12 w-12 rounded-xl bg-warning/20 flex items-center justify-center flex-shrink-0">
@@ -220,7 +237,7 @@ const About = () => {
         </section>
 
         {/* Privacy & Security */}
-        <section className="py-16">
+        <section id="privacy" className="py-16 scroll-mt-20">
           <div className="container max-w-4xl">
             <div className="text-center mb-8">
               <div className="h-16 w-16 rounded-2xl gradient-bg flex items-center justify-center mx-auto mb-4">
