@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import ConditionCard from "@/components/ConditionCard";
 import StepCard from "@/components/StepCard";
+import AboutTableOfContents from "@/components/AboutTableOfContents";
 import Footer from "@/components/Footer";
 import { 
   Stethoscope, 
@@ -32,6 +33,7 @@ const About = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
+      <AboutTableOfContents />
       <main className="flex-1">
         {/* Hero Section */}
         <section id="overview" className="py-20 bg-gradient-to-b from-primary/5 to-background scroll-mt-20">
