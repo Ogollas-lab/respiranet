@@ -175,13 +175,28 @@ const AnalysisSection = () => {
     setStep(3);
 
     try {
+      // Get the user's session token for authenticated edge function call
+      const { data: sessionData } = await supabase.auth.getSession();
+      const accessToken = sessionData?.session?.access_token;
+      
+      if (!accessToken) {
+        toast({
+          title: "Authentication Required",
+          description: "Please sign in to use the analysis feature.",
+          variant: "destructive",
+        });
+        setIsAnalyzing(false);
+        setStep(2);
+        return;
+      }
+
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/analyze-lung-sound`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({
             audioFeatures: {
