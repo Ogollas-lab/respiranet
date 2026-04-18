@@ -1,16 +1,23 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Upload, FileAudio, X, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LiveRecorder from "./LiveRecorder";
 import AudioPreviewPlayer from "./AudioPreviewPlayer";
+
 interface AudioUploaderProps {
   onUpload: (file: File) => void;
+  onFileChange?: (file: File | null) => void;
+  submitRef?: React.MutableRefObject<(() => void) | null>;
 }
 
-const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
+const AudioUploader = ({ onUpload, onFileChange, submitRef }: AudioUploaderProps) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [mode, setMode] = useState<"upload" | "record">("upload");
+
+  useEffect(() => {
+    onFileChange?.(selectedFile);
+  }, [selectedFile, onFileChange]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -24,7 +31,7 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
-    
+
     const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith("audio/")) {
       setSelectedFile(file);
@@ -38,11 +45,21 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = useCallback(() => {
     if (selectedFile) {
       onUpload(selectedFile);
     }
-  };
+  }, [selectedFile, onUpload]);
+
+  // Expose submit handler to parent via ref
+  useEffect(() => {
+    if (submitRef) {
+      submitRef.current = handleUpload;
+    }
+    return () => {
+      if (submitRef) submitRef.current = null;
+    };
+  }, [submitRef, handleUpload]);
 
   const handleRecordingComplete = (file: File) => {
     setSelectedFile(file);
@@ -55,7 +72,7 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
 
   if (mode === "record") {
     return (
-      <LiveRecorder 
+      <LiveRecorder
         onRecordingComplete={handleRecordingComplete}
         onCancel={() => setMode("upload")}
       />
@@ -77,8 +94,8 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
         <div
           className={`
             relative border-2 border-dashed rounded-xl p-12 transition-all duration-200
-            ${isDragOver 
-              ? "border-primary bg-primary/5" 
+            ${isDragOver
+              ? "border-primary bg-primary/5"
               : "border-border hover:border-primary/50 hover:bg-secondary/30"
             }
           `}
@@ -92,7 +109,7 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
             onChange={handleFileSelect}
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           />
-          
+
           <div className="flex flex-col items-center gap-4">
             <div className={`
               h-16 w-16 rounded-2xl flex items-center justify-center transition-all
@@ -100,7 +117,7 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
             `}>
               <Upload className={`h-8 w-8 ${isDragOver ? "text-primary-foreground" : "text-muted-foreground"}`} />
             </div>
-            
+
             <div className="text-center">
               <p className="font-medium text-foreground mb-1">
                 Drag and drop your audio file here
@@ -114,12 +131,12 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
       ) : (
         <div className="border border-border rounded-xl p-6 bg-secondary/20 space-y-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="h-14 w-14 rounded-xl gradient-bg flex items-center justify-center">
+            <div className="flex items-center gap-4 min-w-0">
+              <div className="h-14 w-14 rounded-xl gradient-bg flex items-center justify-center flex-shrink-0">
                 <FileAudio className="h-7 w-7 text-primary-foreground" />
               </div>
-              <div>
-                <p className="font-medium text-foreground">{selectedFile.name}</p>
+              <div className="min-w-0">
+                <p className="font-medium text-foreground truncate">{selectedFile.name}</p>
                 <p className="text-sm text-muted-foreground">
                   {(selectedFile.size / 1024 / 1024).toFixed(2)} MB • {selectedFile.type.split("/")[1]?.toUpperCase()}
                 </p>
@@ -127,12 +144,12 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
             </div>
             <button
               onClick={clearFile}
-              className="h-8 w-8 rounded-full bg-muted flex items-center justify-center hover:bg-destructive/10 hover:text-destructive transition-colors"
+              className="h-8 w-8 rounded-full bg-muted flex items-center justify-center hover:bg-destructive/10 hover:text-destructive transition-colors flex-shrink-0 ml-2"
             >
               <X className="h-4 w-4" />
             </button>
           </div>
-          
+
           <AudioPreviewPlayer file={selectedFile} />
         </div>
       )}
@@ -148,10 +165,10 @@ const AudioUploader = ({ onUpload }: AudioUploaderProps) => {
           <FileAudio className="h-5 w-5 mr-2" />
           Continue with {selectedFile ? "File" : "Upload"}
         </Button>
-        
-        <Button 
-          variant="clinical" 
-          size="lg" 
+
+        <Button
+          variant="clinical"
+          size="lg"
           className="flex-1"
           onClick={() => setMode("record")}
         >

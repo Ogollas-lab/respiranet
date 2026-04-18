@@ -3,7 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import AudioUploader from "./AudioUploader";
 import SymptomForm from "./SymptomForm";
 import AnalysisResults from "./AnalysisResults";
-import { Loader2, Stethoscope } from "lucide-react";
+import { Loader2, Stethoscope, ArrowRight, FileAudio } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { useAnalysisHistory } from "@/hooks/useAnalysisHistory";
@@ -56,6 +57,9 @@ const AnalysisSection = () => {
   } | null>(null);
   
   const audioContextRef = useRef<AudioContext | null>(null);
+  const uploaderSubmitRef = useRef<(() => void) | null>(null);
+  const symptomSubmitRef = useRef<(() => void) | null>(null);
+  const [step1Ready, setStep1Ready] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
   const { saveAnalysis } = useAnalysisHistory();
@@ -346,9 +350,13 @@ const AnalysisSection = () => {
         </div>
 
         {/* Content */}
-        <div className="glass-card p-4 sm:p-6 lg:p-8">
+        <div className="glass-card p-4 sm:p-6 lg:p-8 pb-24 md:pb-8">
           {step === 1 && (
-            <AudioUploader onUpload={handleAudioUpload} />
+            <AudioUploader
+              onUpload={handleAudioUpload}
+              onFileChange={(f) => setStep1Ready(!!f)}
+              submitRef={uploaderSubmitRef}
+            />
           )}
 
           {step === 2 && audioFile && (
@@ -373,7 +381,7 @@ const AnalysisSection = () => {
                   </div>
                 )}
               </div>
-              <SymptomForm onSubmit={handleSymptomSubmit} />
+              <SymptomForm onSubmit={handleSymptomSubmit} submitRef={symptomSubmitRef} />
             </div>
           )}
 
@@ -412,6 +420,35 @@ const AnalysisSection = () => {
           </p>
         </div>
       </div>
+
+      {/* Mobile sticky bottom action bar */}
+      {(step === 1 || step === 2) && (
+        <div className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-border bg-background/95 backdrop-blur-xl px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-4px_20px_-4px_hsl(var(--foreground)/0.1)]">
+          {step === 1 && (
+            <Button
+              variant="hero"
+              size="lg"
+              className="w-full"
+              disabled={!step1Ready}
+              onClick={() => uploaderSubmitRef.current?.()}
+            >
+              <FileAudio className="h-5 w-5 mr-2" />
+              {step1Ready ? "Continue" : "Select audio to continue"}
+            </Button>
+          )}
+          {step === 2 && (
+            <Button
+              variant="hero"
+              size="lg"
+              className="w-full"
+              onClick={() => symptomSubmitRef.current?.()}
+            >
+              Run AI Analysis
+              <ArrowRight className="h-5 w-5 ml-2" />
+            </Button>
+          )}
+        </div>
+      )}
     </section>
   );
 };
