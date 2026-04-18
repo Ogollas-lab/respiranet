@@ -381,7 +381,7 @@ const AnalysisSection = () => {
                   </div>
                 )}
               </div>
-              <SymptomForm onSubmit={handleSymptomSubmit} />
+              <SymptomForm onSubmit={handleSymptomSubmit} submitRef={symptomSubmitRef} />
             </div>
           )}
 
