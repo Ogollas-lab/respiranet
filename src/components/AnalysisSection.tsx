@@ -3,7 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import AudioUploader from "./AudioUploader";
 import SymptomForm from "./SymptomForm";
 import AnalysisResults from "./AnalysisResults";
-import { Loader2, Stethoscope } from "lucide-react";
+import { Loader2, Stethoscope, ArrowRight, FileAudio } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { useAnalysisHistory } from "@/hooks/useAnalysisHistory";
@@ -56,6 +57,9 @@ const AnalysisSection = () => {
   } | null>(null);
   
   const audioContextRef = useRef<AudioContext | null>(null);
+  const uploaderSubmitRef = useRef<(() => void) | null>(null);
+  const symptomSubmitRef = useRef<(() => void) | null>(null);
+  const [step1Ready, setStep1Ready] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
   const { saveAnalysis } = useAnalysisHistory();
@@ -346,9 +350,13 @@ const AnalysisSection = () => {
         </div>
 
         {/* Content */}
-        <div className="glass-card p-4 sm:p-6 lg:p-8">
+        <div className="glass-card p-4 sm:p-6 lg:p-8 pb-24 md:pb-8">
           {step === 1 && (
-            <AudioUploader onUpload={handleAudioUpload} />
+            <AudioUploader
+              onUpload={handleAudioUpload}
+              onFileChange={(f) => setStep1Ready(!!f)}
+              submitRef={uploaderSubmitRef}
+            />
           )}
 
           {step === 2 && audioFile && (
