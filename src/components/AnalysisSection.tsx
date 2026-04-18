@@ -301,71 +301,73 @@ const AnalysisSection = () => {
   };
 
   return (
-    <section id="analyze" className="py-24 bg-muted/30">
+    <section id="analyze" className="py-16 sm:py-20 lg:py-24 bg-muted/30">
       <div className="container max-w-5xl">
-        <div className="text-center mb-12 animate-fade-in">
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+        <div className="text-center mb-10 sm:mb-12 animate-fade-in">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             Analyze <span className="gradient-text">Lung Sounds</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
             Upload a lung sound recording and provide symptom information for 
             AI-powered respiratory analysis using advanced deep learning.
           </p>
         </div>
 
         {/* Progress steps */}
-        <div className="flex items-center justify-center gap-4 mb-12">
+        <div className="flex items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
           {[1, 2, 3].map((s) => (
             <div key={s} className="flex items-center gap-2">
               <div className={`
-                h-10 w-10 rounded-full flex items-center justify-center font-medium text-sm transition-all
+                h-9 w-9 sm:h-10 sm:w-10 rounded-full flex items-center justify-center font-medium text-sm transition-all
                 ${step >= s ? "gradient-bg text-primary-foreground" : "bg-secondary text-muted-foreground"}
               `}>
                 {s}
               </div>
               {s < 3 && (
-                <div className={`w-16 h-1 rounded-full transition-all ${step > s ? "gradient-bg" : "bg-secondary"}`} />
+                <div className={`w-8 sm:w-16 h-1 rounded-full transition-all ${step > s ? "gradient-bg" : "bg-secondary"}`} />
               )}
             </div>
           ))}
         </div>
 
         {/* Step labels */}
-        <div className="flex items-center justify-center gap-4 mb-12">
-          <span className={`text-sm ${step >= 1 ? "text-foreground font-medium" : "text-muted-foreground"}`}>
-            Upload Audio
+        <div className="flex items-center justify-center gap-2 sm:gap-4 mb-10 sm:mb-12">
+          <span className={`text-xs sm:text-sm ${step >= 1 ? "text-foreground font-medium" : "text-muted-foreground"}`}>
+            Upload
           </span>
-          <div className="w-16" />
-          <span className={`text-sm ${step >= 2 ? "text-foreground font-medium" : "text-muted-foreground"}`}>
+          <div className="w-8 sm:w-16" />
+          <span className={`text-xs sm:text-sm ${step >= 2 ? "text-foreground font-medium" : "text-muted-foreground"}`}>
             Symptoms
           </span>
-          <div className="w-16" />
-          <span className={`text-sm ${step >= 3 ? "text-foreground font-medium" : "text-muted-foreground"}`}>
+          <div className="w-8 sm:w-16" />
+          <span className={`text-xs sm:text-sm ${step >= 3 ? "text-foreground font-medium" : "text-muted-foreground"}`}>
             Results
           </span>
         </div>
 
         {/* Content */}
-        <div className="glass-card p-8">
+        <div className="glass-card p-4 sm:p-6 lg:p-8">
           {step === 1 && (
             <AudioUploader onUpload={handleAudioUpload} />
           )}
 
           {step === 2 && audioFile && (
             <div className="space-y-6">
-              <div className="flex items-center gap-3 p-4 bg-secondary/50 rounded-lg">
-                <div className="h-10 w-10 rounded-lg gradient-bg flex items-center justify-center">
-                  <Stethoscope className="h-5 w-5 text-primary-foreground" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium text-foreground">{audioFile.name}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {(audioFile.size / 1024 / 1024).toFixed(2)} MB
-                    {audioFeatures && ` • ${audioFeatures.duration.toFixed(1)}s duration`}
-                  </p>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 bg-secondary/50 rounded-lg">
+                <div className="flex items-center gap-3 flex-1 min-w-0 w-full">
+                  <div className="h-10 w-10 rounded-lg gradient-bg flex items-center justify-center flex-shrink-0">
+                    <Stethoscope className="h-5 w-5 text-primary-foreground" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-foreground truncate">{audioFile.name}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
+                      {(audioFile.size / 1024 / 1024).toFixed(2)} MB
+                      {audioFeatures && ` • ${audioFeatures.duration.toFixed(1)}s`}
+                    </p>
+                  </div>
                 </div>
                 {audioFeatures && (
-                  <div className="text-right text-xs text-muted-foreground">
+                  <div className="text-left sm:text-right text-xs text-muted-foreground sm:flex-shrink-0">
                     <p>ZCR: {audioFeatures.zcr.toFixed(4)}</p>
                     <p>SC: {audioFeatures.spectralCentroid.toFixed(0)} Hz</p>
                   </div>

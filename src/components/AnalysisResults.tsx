@@ -82,9 +82,9 @@ const AnalysisResults = ({ results, symptoms, fileName, onReset }: AnalysisResul
       </div>
 
       {/* Primary diagnosis */}
-      <div className="text-center p-8 rounded-2xl bg-gradient-to-br from-secondary to-secondary/50 border border-border">
+      <div className="text-center p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-secondary to-secondary/50 border border-border">
         <p className="text-sm text-muted-foreground mb-2">Primary Assessment</p>
-        <h3 className="font-display text-4xl font-bold gradient-text mb-4">
+        <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold gradient-text mb-4 break-words">
           {results.primaryDiagnosis}
         </h3>
         <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${conf.bg} ${conf.border} border`}>
@@ -234,7 +234,7 @@ const AnalysisResults = ({ results, symptoms, fileName, onReset }: AnalysisResul
       </div>
 
       {/* Actions */}
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
         <Button variant="clinical" size="lg" className="flex-1" onClick={onReset}>
           <RefreshCw className="h-5 w-5 mr-2" />
           New Analysis

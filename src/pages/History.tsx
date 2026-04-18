@@ -129,16 +129,16 @@ const History = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="container max-w-5xl py-24">
-        <div className="flex items-center gap-4 mb-8">
-          <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
+      <main className="container max-w-5xl py-12 sm:py-16 lg:py-24">
+        <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <Button variant="ghost" size="icon" onClick={() => navigate("/")} className="flex-shrink-0">
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <div>
-            <h1 className="font-display text-3xl font-bold">
+          <div className="min-w-0">
+            <h1 className="font-display text-2xl sm:text-3xl font-bold">
               Analysis <span className="gradient-text">History</span>
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-sm sm:text-base text-muted-foreground">
               Track your respiratory health over time
             </p>
           </div>
@@ -223,20 +223,20 @@ const History = () => {
             {records.map((record) => (
               <Card key={record.id} className="overflow-hidden">
                 <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-lg gradient-bg flex items-center justify-center">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="h-10 w-10 rounded-lg gradient-bg flex items-center justify-center flex-shrink-0">
                         <Stethoscope className="h-5 w-5 text-primary-foreground" />
                       </div>
-                      <div>
-                        <CardTitle className="text-lg">{record.primary_diagnosis}</CardTitle>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Calendar className="h-3 w-3" />
-                          {format(new Date(record.created_at), "PPp")}
+                      <div className="min-w-0">
+                        <CardTitle className="text-base sm:text-lg truncate">{record.primary_diagnosis}</CardTitle>
+                        <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                          <Calendar className="h-3 w-3 flex-shrink-0" />
+                          <span className="truncate">{format(new Date(record.created_at), "PPp")}</span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 sm:flex-shrink-0">
                       <Badge variant={getConfidenceBadgeVariant(record.confidence)}>
                         {record.confidence} confidence
                       </Badge>
