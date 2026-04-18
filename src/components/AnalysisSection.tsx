@@ -420,6 +420,35 @@ const AnalysisSection = () => {
           </p>
         </div>
       </div>
+
+      {/* Mobile sticky bottom action bar */}
+      {(step === 1 || step === 2) && (
+        <div className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-border bg-background/95 backdrop-blur-xl px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-4px_20px_-4px_hsl(var(--foreground)/0.1)]">
+          {step === 1 && (
+            <Button
+              variant="hero"
+              size="lg"
+              className="w-full"
+              disabled={!step1Ready}
+              onClick={() => uploaderSubmitRef.current?.()}
+            >
+              <FileAudio className="h-5 w-5 mr-2" />
+              {step1Ready ? "Continue" : "Select audio to continue"}
+            </Button>
+          )}
+          {step === 2 && (
+            <Button
+              variant="hero"
+              size="lg"
+              className="w-full"
+              onClick={() => symptomSubmitRef.current?.()}
+            >
+              Run AI Analysis
+              <ArrowRight className="h-5 w-5 ml-2" />
+            </Button>
+          )}
+        </div>
+      )}
     </section>
   );
 };
