@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -7,9 +7,10 @@ import type { SymptomData } from "./AnalysisSection";
 
 interface SymptomFormProps {
   onSubmit: (data: SymptomData) => void;
+  submitRef?: React.MutableRefObject<(() => void) | null>;
 }
 
-const SymptomForm = ({ onSubmit }: SymptomFormProps) => {
+const SymptomForm = ({ onSubmit, submitRef }: SymptomFormProps) => {
   const [formData, setFormData] = useState<SymptomData>({
     fever: false,
     chestPain: false,
@@ -18,11 +19,21 @@ const SymptomForm = ({ onSubmit }: SymptomFormProps) => {
     shortnessOfBreath: "",
     duration: "",
   });
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
   };
+
+  useEffect(() => {
+    if (submitRef) {
+      submitRef.current = () => onSubmit(formData);
+    }
+    return () => {
+      if (submitRef) submitRef.current = null;
+    };
+  }, [submitRef, onSubmit, formData]);
 
   const SelectButton = ({ 
     value, 
@@ -51,7 +62,7 @@ const SymptomForm = ({ onSubmit }: SymptomFormProps) => {
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
       <div className="text-center">
         <h3 className="font-display text-2xl font-semibold mb-2 text-foreground">
           Symptom Assessment
