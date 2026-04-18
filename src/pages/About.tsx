@@ -36,7 +36,7 @@ const About = () => {
       <AboutTableOfContents />
       <main className="flex-1">
         {/* Hero Section */}
-        <section id="overview" className="py-20 bg-gradient-to-b from-primary/5 to-background scroll-mt-20">
+        <section id="overview" className="py-14 sm:py-20 bg-gradient-to-b from-primary/5 to-background scroll-mt-20">
           <div className="container max-w-4xl text-center">
             <ScrollReveal>
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
@@ -45,12 +45,12 @@ const About = () => {
               </div>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
-              <h1 className="font-display text-4xl md:text-5xl font-bold mb-6">
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
                 About <span className="gradient-text">LungAI</span>
               </h1>
             </ScrollReveal>
             <ScrollReveal delay={0.2}>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
                 LungAI is an innovative AI-powered tool designed to help analyze lung sounds 
                 and provide insights into potential respiratory conditions. Our mission is to 
                 make respiratory health screening more accessible to everyone.
@@ -60,15 +60,15 @@ const About = () => {
         </section>
 
         {/* What We Do */}
-        <section id="what-we-do" className="py-16 scroll-mt-20">
+        <section id="what-we-do" className="py-12 sm:py-16 scroll-mt-20">
           <div className="container max-w-4xl">
             <ScrollReveal>
-              <h2 className="font-display text-3xl font-bold mb-8 text-center">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center">
                 What Does LungAI Do?
               </h2>
             </ScrollReveal>
             
-            <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-12">
               {[
                 { icon: Mic, title: "Record or Upload", desc: "Capture lung sounds using your device's microphone or upload existing audio recordings" },
                 { icon: Brain, title: "AI Analysis", desc: "Our advanced AI analyzes the audio patterns combined with your symptom information" },

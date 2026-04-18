@@ -9,7 +9,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[90vh] hero-gradient overflow-hidden">
+    <section className="relative min-h-[85vh] lg:min-h-[90vh] hero-gradient overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/5 blur-3xl" />
@@ -17,24 +17,24 @@ const HeroSection = () => {
         <div className="absolute bottom-20 right-1/4 h-40 w-40 rounded-full bg-success/5 blur-2xl" />
       </div>
 
-      <div className="container relative pt-20 pb-32">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <div className="container relative pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-24 lg:pb-32">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center">
           {/* Left content */}
-          <div className="space-y-8 animate-fade-in">
+          <div className="space-y-6 sm:space-y-8 animate-fade-in">
             <div className="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-2 border border-primary/10">
               <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
-              <span className="text-sm font-medium text-secondary-foreground">
+              <span className="text-xs sm:text-sm font-medium text-secondary-foreground">
                 AI-Powered Diagnostics
               </span>
             </div>
 
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1]">
               Advanced{" "}
               <span className="gradient-text">Lung Sound</span>{" "}
               Analysis
             </h1>
 
-            <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
+            <p className="text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
               Harness the power of hybrid deep learning and digital signal processing 
               to detect respiratory conditions with clinical-grade accuracy.
             </p>
@@ -67,8 +67,8 @@ const HeroSection = () => {
           </div>
 
           {/* Right visual */}
-          <div className="relative lg:pl-8 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-            <div className="relative glass-card p-8 glow-shadow">
+          <div className="relative lg:pl-8 animate-fade-in-up mt-4 lg:mt-0" style={{ animationDelay: "0.2s" }}>
+            <div className="relative glass-card p-5 sm:p-8 glow-shadow">
               <div className="absolute inset-0 rounded-xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
               </div>
@@ -84,28 +84,28 @@ const HeroSection = () => {
 
                 <WaveformVisualizer />
 
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="text-center p-3 rounded-lg bg-secondary/50">
-                    <div className="text-2xl font-display font-bold text-foreground">98%</div>
-                    <div className="text-xs text-muted-foreground">Accuracy</div>
+                <div className="grid grid-cols-3 gap-2 sm:gap-4">
+                  <div className="text-center p-2 sm:p-3 rounded-lg bg-secondary/50">
+                    <div className="text-xl sm:text-2xl font-display font-bold text-foreground">98%</div>
+                    <div className="text-[10px] sm:text-xs text-muted-foreground">Accuracy</div>
                   </div>
-                  <div className="text-center p-3 rounded-lg bg-secondary/50">
-                    <div className="text-2xl font-display font-bold text-foreground">&lt;2s</div>
-                    <div className="text-xs text-muted-foreground">Analysis</div>
+                  <div className="text-center p-2 sm:p-3 rounded-lg bg-secondary/50">
+                    <div className="text-xl sm:text-2xl font-display font-bold text-foreground">&lt;2s</div>
+                    <div className="text-[10px] sm:text-xs text-muted-foreground">Analysis</div>
                   </div>
-                  <div className="text-center p-3 rounded-lg bg-secondary/50">
-                    <div className="text-2xl font-display font-bold text-foreground">5+</div>
-                    <div className="text-xs text-muted-foreground">Conditions</div>
+                  <div className="text-center p-2 sm:p-3 rounded-lg bg-secondary/50">
+                    <div className="text-xl sm:text-2xl font-display font-bold text-foreground">5+</div>
+                    <div className="text-[10px] sm:text-xs text-muted-foreground">Conditions</div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Floating badges */}
-            <div className="absolute -top-4 -right-4 glass-card px-4 py-2 animate-float">
+            <div className="hidden sm:block absolute -top-4 -right-4 glass-card px-4 py-2 animate-float">
               <span className="text-sm font-medium text-foreground">MobileNetV2</span>
             </div>
-            <div className="absolute -bottom-4 -left-4 glass-card px-4 py-2 animate-float" style={{ animationDelay: "1s" }}>
+            <div className="hidden sm:block absolute -bottom-4 -left-4 glass-card px-4 py-2 animate-float" style={{ animationDelay: "1s" }}>
               <span className="text-sm font-medium text-foreground">Mel-Spectrogram</span>
             </div>
           </div>
