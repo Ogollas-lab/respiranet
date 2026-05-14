@@ -66,6 +66,37 @@ serve(async (req) => {
 
     const { audioFeatures, symptoms }: AnalysisRequest = await req.json();
 
+    // Server-side input validation (allowlist) to prevent prompt injection
+    const VALID_COUGH = new Set(["", "none", "dry", "productive", "barking"]);
+    const VALID_SOB = new Set(["", "none", "mild", "moderate", "severe"]);
+    const VALID_DURATION = new Set(["", "days", "weeks", "months", "chronic"]);
+
+    const isFiniteNum = (n: unknown, min: number, max: number) =>
+      typeof n === "number" && Number.isFinite(n) && n >= min && n <= max;
+
+    if (
+      !symptoms ||
+      !audioFeatures ||
+      typeof symptoms.fever !== "boolean" ||
+      typeof symptoms.chestPain !== "boolean" ||
+      typeof symptoms.wheezing !== "boolean" ||
+      !VALID_COUGH.has(symptoms.coughType ?? "") ||
+      !VALID_SOB.has(symptoms.shortnessOfBreath ?? "") ||
+      !VALID_DURATION.has(symptoms.duration ?? "") ||
+      !isFiniteNum(audioFeatures.zcr, 0, 1) ||
+      !isFiniteNum(audioFeatures.spectralCentroid, 0, 22050) ||
+      !isFiniteNum(audioFeatures.harmonicEnergy, 0, 1) ||
+      !isFiniteNum(audioFeatures.duration, 0, 600)
+    ) {
+      return new Response(
+        JSON.stringify({ error: "Invalid input" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // fileName is no longer embedded in prompts to eliminate injection vector
+
+
     // Build the clinical reasoning prompt
     const systemPrompt = `You are an advanced AI medical assistant specialized in respiratory disease detection. You analyze lung sound audio features combined with patient symptoms to provide clinical assessments.
 
